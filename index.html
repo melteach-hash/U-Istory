@@ -10,6 +10,9 @@
 <meta property="og:description" content="Education is the great equalizer. See how U&I is breaking the cycle of poverty through volunteer-driven mentoring across India.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <style>
@@ -27,17 +30,18 @@
   --red-light: #FFF0F1;
   --red-dark: #C62828;
   --rose: rgba(230, 57, 70, 0.06);
-  --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --max-w: 1200px;
-  /* Spacing scale (8px base) — narrative-flow optimized */
-  --section-py: 96px;
+  --font: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --max-w: clamp(1000px, 80vw, 1400px);
+  /* Spacing scale — viewport-relative for autoscaling */
+  --section-py: clamp(48px, 8vh, 120px);
   --content-gap: 32px;
   --element-gap: 20px;
   --tight-gap: 8px;
-  --edge-pad: clamp(20px, 4vw, 40px);
+  --edge-pad: clamp(20px, 5vw, 64px);
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; scroll-snap-type: y proximity; }
 
 body {
   font-family: var(--font);
@@ -50,8 +54,8 @@ body {
 
 /* ── Typography ── */
 h1, h2, h3, h4 { color: var(--red); font-weight: 600; line-height: 1.2; }
-h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.03em; }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -0.02em; }
+h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.03em; font-weight: 400; }
+h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -0.02em; font-weight: 400; }
 h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
 h4 { font-size: 1.1rem; }
 p { max-width: 680px; }
@@ -59,8 +63,25 @@ p { max-width: 680px; }
 
 /* ── Layout ── */
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--edge-pad); }
-.section { padding: var(--section-py) 0; }
+.section {
+  min-height: 100vh; padding: var(--section-py) 0;
+  display: flex; flex-direction: column; justify-content: center;
+  scroll-snap-align: start;
+  position: relative; overflow: hidden;
+}
+.section::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.025;
+  filter: url(#grain-filter); background: white;
+}
+.section > .container { position: relative; z-index: 1; }
 .section-alt { background: var(--off-white); }
+.section::after {
+  content: ''; position: absolute; top: 20%; right: -10%;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,57,70,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
 
 /* ── Buttons ── */
 .btn {
@@ -130,7 +151,7 @@ p { max-width: 680px; }
 .nav-links a {
   font-size: 0.82rem; color: var(--text-dark); text-decoration: none;
   font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s;
-  position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  position: relative; font-family: var(--font);
 }
 .nav-links a::after {
   content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px;
@@ -141,8 +162,9 @@ p { max-width: 680px; }
 
 /* ── Hero ── */
 .hero {
-  min-height: 80vh; display: flex; align-items: center;
+  min-height: 100vh; display: flex; align-items: center;
   position: relative; overflow: hidden; padding-top: 72px;
+  scroll-snap-align: start;
 }
 .hero::before {
   content: ''; position: absolute; top: -20%; right: -10%;
@@ -186,7 +208,7 @@ p { max-width: 680px; }
   display: flex; justify-content: center; gap: 40px; margin-bottom: 20px;
   font-size: 0.82rem; color: var(--text-body); text-align: center;
 }
-.timeline-stat-val { font-size: 1.6rem; font-weight: 700; color: var(--text-dark); line-height: 1.2; }
+.timeline-stat-val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; color: var(--text-dark); line-height: 1.2; }
 .timeline-stat-label { font-size: 0.7rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 .timeline-track { position: relative; width: 100%; padding: 0 8px; }
 .timeline-input {
@@ -224,17 +246,17 @@ p { max-width: 680px; }
 .hero-text h1 { margin-bottom: 20px; }
 .hero-headline { margin-bottom: 16px; }
 .hero-word {
-  display: block; font-size: clamp(3.2rem, 7.5vw, 5.6rem);
-  font-weight: 700; color: var(--text-dark); letter-spacing: -0.04em;
+  display: block; font-family: var(--font-display); font-size: clamp(3.2rem, 7.5vw, 5.6rem);
+  font-weight: 400; color: var(--text-dark); letter-spacing: -0.04em;
   line-height: 1; margin-bottom: 6px;
 }
 .hero-sub-line {
-  display: block; font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 500; color: var(--red); letter-spacing: -0.01em; line-height: 1.2;
+  display: block; font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 400; font-style: italic; color: var(--red); letter-spacing: -0.01em; line-height: 1.2;
 }
 @media (max-width: 768px) {
-  .hero-word { font-size: clamp(2.4rem, 12vw, 3.6rem); }
-  .hero-sub-line { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+  .hero-word { font-family: var(--font-display); font-size: clamp(2.4rem, 12vw, 3.6rem); }
+  .hero-sub-line { font-family: var(--font-display); font-size: clamp(1.2rem, 5vw, 1.8rem); }
 }
 /* ── Grain Texture Overlay ── */
 .grain {
@@ -244,15 +266,17 @@ p { max-width: 680px; }
 }
 .hero-text p { font-size: 1.1rem; color: var(--text-body); margin-bottom: 36px; max-width: 480px; }
 .hero-stats { display: flex; gap: 48px; margin-top: 40px; align-items: center; }
-.hero-stat-num { font-size: 4rem; font-weight: 700; color: var(--text-dark); line-height: 1; display: flex; align-items: center; justify-content: center; }
+.hero-stat-num { font-family: var(--font-display); font-size: 4rem; font-weight: 400; color: var(--text-dark); line-height: 1; display: flex; align-items: center; justify-content: center; }
 .hero-stat-num span { color: var(--red); }
 .hero-stat-num .plus { font-size: 2rem; display: inline-block; }
 .hero-stat-label { font-size: 0.78rem; color: var(--text-gray); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
 
 /* ── Map ── */
 .map-section {
-  background: #FBF8F0; padding: 80px 0;
+  background: #FBF8F0; padding: clamp(20px, 3vh, 48px) 0;
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
   position: relative; overflow: hidden;
+  scroll-snap-align: start;
 }
 .map-section::before {
   content: ''; position: absolute;
@@ -261,31 +285,36 @@ p { max-width: 680px; }
   background: radial-gradient(circle, rgba(230,57,70,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
+.map-section::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.03;
+  filter: url(#grain-filter); background: white;
+}
 .map-container { position: relative; width: 100%; margin: 0 auto; }
-.map-wide { max-width: 1350px; margin: 0 auto; padding: 0 var(--edge-pad); }
+.map-wide { margin: 0; padding: 0 clamp(16px, 3vw, 56px); }
+.map-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 768px) {
+  .map-scroll { overflow-x: scroll; }
+  .map-scroll .map-container { min-width: 700px; }
+}
 .map-container svg { width: 100%; height: auto; }
 .map-city-dot {
   filter: drop-shadow(0 0 2px rgba(230,57,70,0.3));
   transition: r 0.2s ease, filter 0.2s ease;
-  animation: dotPulse 3.5s ease-in-out infinite;
-}
-@keyframes dotPulse {
-  0%, 100% { filter: drop-shadow(0 0 2px rgba(230,57,70,0.25)); }
-  50% { filter: drop-shadow(0 0 5px rgba(230,57,70,0.55)); }
 }
 .map-city-label {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 11px; font-weight: 700; fill: #1a1a1a;
+  font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px; font-weight: 700; fill: #1a1a1a;
   letter-spacing: 0.01em;
   transition: fill 0.2s ease;
   pointer-events: none;
 }
 .map-state-header {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 9px; font-weight: 700; fill: #E63946;
+  font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px; font-weight: 700; fill: #E63946;
   letter-spacing: 0.1em; text-transform: uppercase;
 }
-.map-leader { stroke: #999; stroke-width: 0.5; stroke-dasharray: 3 2; opacity: 0.3; fill: none; transition: opacity 0.2s ease, stroke 0.2s ease; }
+.map-leader { stroke: #999; stroke-width: 0.5; opacity: 0.3; fill: none; transition: opacity 0.2s ease, stroke 0.2s ease; }
 .map-city-group { cursor: pointer; }
 .map-city-group:hover .map-city-dot { r: 6; filter: drop-shadow(0 0 6px rgba(230,57,70,0.6)); }
 .map-city-group:hover .map-city-label { fill: #E63946; }
@@ -296,9 +325,9 @@ p { max-width: 680px; }
 .card {
   background: var(--white); border: 1px solid var(--mid-gray);
   border-radius: 12px; padding: 32px; transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  position: relative;
+  position: relative; border-left: 3px solid transparent;
 }
-.card:hover { border-color: var(--red); box-shadow: 0 12px 40px rgba(230,57,70,0.10); transform: translateY(-4px); }
+.card:hover { border-color: var(--red); border-left-color: var(--red); box-shadow: 0 12px 40px rgba(230,57,70,0.10); transform: translateY(-4px); }
 .card-icon {
   width: 44px; height: 44px; border-radius: 10px; background: var(--red-light);
   display: flex; align-items: center; justify-content: center;
@@ -321,7 +350,7 @@ p { max-width: 680px; }
 /* ── Metrics ── */
 .metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin: 48px 0; }
 .metric-box { text-align: center; padding: 24px 16px; }
-.metric-num { font-size: 2.8rem; font-weight: 700; color: var(--text-dark); line-height: 1; }
+.metric-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 400; color: var(--text-dark); line-height: 1; }
 .metric-num .red { color: var(--red); }
 .metric-label { font-size: 0.82rem; color: var(--text-gray); margin-top: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
 
@@ -333,7 +362,7 @@ p { max-width: 680px; }
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1); cursor: default;
 }
 .toc-step:hover { border-color: var(--red); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(230,57,70,0.08); }
-.toc-step h4 { font-size: 0.9rem; margin-bottom: 6px; }
+.toc-step h4 { font-size: 0.9rem; margin-bottom: 6px; font-family: var(--font-display); font-weight: 400; font-size: 1rem; }
 .toc-step p { font-size: 0.78rem; color: var(--text-gray); max-width: 180px; margin: 0 auto; }
 .toc-arrow { color: var(--red); font-size: 1.4rem; font-weight: 300; }
 
@@ -346,22 +375,30 @@ p { max-width: 680px; }
 .story-card:hover { border-color: var(--red); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(230,57,70,0.08); }
 .story-card::before {
   content: '\201C'; position: absolute; top: 12px; left: 20px;
-  font-size: 4rem; color: var(--red-light); font-family: Georgia, serif; line-height: 1;
+  font-size: 4rem; color: var(--red-light); font-family: var(--font-display); line-height: 1;
 }
 .story-card p { font-size: 0.95rem; position: relative; z-index: 1; }
+.story-card .story-quote { font-family: var(--font-display); font-size: 1.08rem; font-style: italic; line-height: 1.8; }
 .story-card .story-attr { font-size: 0.82rem; color: var(--text-gray); margin-top: 16px; font-style: italic; }
 
 /* ── CTA Section ── */
 .cta-section {
   background: var(--text-dark); color: var(--white); padding: var(--section-py) 0;
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
+  scroll-snap-align: start;
 }
 .cta-section::before {
   content: ''; position: absolute; top: -50%; right: -20%;
   width: 600px; height: 600px; border-radius: 50%;
   background: radial-gradient(circle, rgba(230,57,70,0.15) 0%, transparent 70%);
 }
-.cta-section h2 { color: var(--white); margin-bottom: 12px; }
+.cta-section::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.04;
+  filter: url(#grain-filter); background: white;
+}
+.cta-section h2 { color: var(--white); margin-bottom: 12px; font-family: var(--font-display); font-weight: 400; }
 .cta-section p { color: rgba(255,255,255,0.7); margin-bottom: 28px; }
 .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 36px; }
 .cta-card {
@@ -373,8 +410,13 @@ p { max-width: 680px; }
 .cta-card p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
 
 /* ── Footer ── */
-.footer { padding: 56px 0; border-top: 1px solid var(--mid-gray); }
-.footer p { font-size: 0.82rem; color: var(--text-gray); text-align: center; }
+.footer { padding: 56px 0; border-top: 1px solid var(--mid-gray); position: relative; overflow: hidden; }
+.footer::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.02;
+  filter: url(#grain-filter); background: white;
+}
+.footer p { font-size: 0.82rem; color: var(--text-gray); text-align: center; position: relative; z-index: 1; }
 
 /* ── Scroll-Reveal Animations (GPU-accelerated) ── */
 .reveal {
@@ -414,6 +456,14 @@ p { max-width: 680px; }
 .stagger-5 { transition-delay: 0.40s; }
 .stagger-6 { transition-delay: 0.48s; }
 
+/* Enhanced section decorative line */
+.section-heading-line {
+  width: 40px; height: 2px; background: var(--red);
+  margin-bottom: 16px; border-radius: 1px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.visible .section-heading-line { width: 60px; }
+
 /* Hero entrance (immediate, no scroll trigger) */
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(32px); }
@@ -444,12 +494,201 @@ p { max-width: 680px; }
 .chart-bar { transition: all 0.4s ease; }
 .chart-bar:hover { opacity: 0.85; }
 
+/* ── Map Cascade Animation ── */
+.map-dot-anim { transform: scale(0); transform-box: fill-box; transform-origin: center; }
+.map-line-anim { stroke-dasharray: 1200; stroke-dashoffset: 1200; }
+.map-name-anim { opacity: 0; }
+.map-header-anim { opacity: 0; }
+.map-entered .map-dot-anim {
+  animation: mapDotIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.map-entered .map-line-anim {
+  animation: mapLineIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.map-entered .map-name-anim {
+  animation: mapNameIn 0.35s ease forwards;
+}
+.map-entered .map-header-anim {
+  animation: mapNameIn 0.4s ease forwards;
+}
+@keyframes mapDotIn {
+  0% { transform: scale(0); filter: drop-shadow(0 0 0 transparent); }
+  60% { transform: scale(1.3); filter: drop-shadow(0 0 8px rgba(230,57,70,0.7)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 3px rgba(230,57,70,0.35)); }
+}
+@keyframes mapLineIn {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes mapNameIn {
+  to { opacity: 1; }
+}
+
+/* ── Map Header Entrance ── */
+.map-header-group {
+  opacity: 0; transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.map-header-group.entered {
+  opacity: 1; transform: translateX(0);
+}
+.map-stats-group {
+  opacity: 0; transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.map-stats-group.entered {
+  opacity: 1; transform: translateX(0);
+}
+
+/* ── A: Scroll Hint ── */
+.scroll-hint {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 2; opacity: 1; transition: opacity 0.5s ease;
+}
+.scroll-hint.hidden { opacity: 0; pointer-events: none; }
+.scroll-hint-text {
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-gray); font-weight: 500;
+}
+.scroll-hint-arrow {
+  width: 20px; height: 20px; border-right: 1.5px solid var(--red);
+  border-bottom: 1.5px solid var(--red); transform: rotate(45deg);
+  animation: scrollBounce 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.7; }
+  50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+}
+
+/* ── B: Stat Callout (full-width bold moment) ── */
+.stat-callout {
+  text-align: center; padding: clamp(40px, 6vh, 80px) 24px;
+  min-height: 40vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.stat-callout::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.025;
+  filter: url(#grain-filter); background: white;
+}
+.stat-callout-num {
+  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400;
+  color: var(--text-dark); line-height: 1; letter-spacing: -0.03em;
+  position: relative; z-index: 1;
+}
+.stat-callout-num .red { color: var(--red); }
+.stat-callout-label {
+  font-size: 0.82rem; color: var(--text-gray); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-top: 8px; font-weight: 500;
+  position: relative; z-index: 1;
+}
+
+/* ── C: Progress Dots ── */
+.progress-dots {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  z-index: 90; display: flex; flex-direction: column; gap: 12px;
+}
+.progress-dot {
+  width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--mid-gray);
+  background: transparent; cursor: pointer; transition: all 0.3s ease;
+  padding: 0;
+}
+.progress-dot:hover { border-color: var(--red); transform: scale(1.3); }
+.progress-dot.active { background: var(--red); border-color: var(--red); transform: scale(1.2); }
+@media (max-width: 768px) {
+  .progress-dots { right: 10px; gap: 10px; }
+  .progress-dot { width: 6px; height: 6px; }
+}
+
+/* ── D: Program Comparison Table ── */
+.compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 32px 0; }
+.compare-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
+  min-width: 600px;
+}
+.compare-table th {
+  text-align: left; padding: 14px 16px; font-weight: 600;
+  color: var(--red); font-size: 0.95rem; border-bottom: 2px solid var(--red);
+  white-space: nowrap;
+}
+.compare-table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--mid-gray);
+  color: var(--text-body); vertical-align: top;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .row-label {
+  font-weight: 600; color: var(--text-dark); font-size: 0.82rem;
+  text-transform: uppercase; letter-spacing: 0.06em; width: 140px;
+}
+@media (max-width: 768px) {
+  .compare-table { min-width: 520px; font-size: 0.82rem; }
+  .compare-table th, .compare-table td { padding: 10px 12px; }
+}
+
+/* ── E: Story Impact Badge ── */
+.story-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 0.7rem;
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.story-badge.fln { background: rgba(230,57,70,0.08); color: var(--red); }
+.story-badge.girls { background: rgba(156,39,176,0.08); color: #9C27B0; }
+.story-badge.careers { background: rgba(33,150,243,0.08); color: #2196F3; }
+
+/* ── F: Flip Cards ── */
+.flip-card {
+  perspective: 800px; cursor: pointer; min-height: 180px;
+}
+.flip-card-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 12px; padding: 28px; border: 1px solid var(--mid-gray);
+  background: var(--white);
+}
+.flip-card-back {
+  transform: rotateY(180deg); background: var(--off-white);
+  border-left: 3px solid var(--red);
+}
+.flip-hint {
+  font-size: 0.7rem; color: var(--text-gray); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-top: 12px;
+}
+
+/* ── H: Map Tooltip ── */
+.map-tooltip {
+  position: absolute; pointer-events: none;
+  background: var(--text-dark); color: var(--white);
+  padding: 6px 12px; border-radius: 6px; font-size: 0.75rem;
+  font-weight: 500; letter-spacing: 0.02em; font-family: 'DM Sans', var(--font);
+  white-space: nowrap; z-index: 20; opacity: 0;
+  transition: opacity 0.2s ease; transform: translate(-50%, -100%);
+  margin-top: -12px;
+}
+.map-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%); border: 5px solid transparent;
+  border-top-color: var(--text-dark);
+}
+.map-tooltip.visible { opacity: 1; }
+
 /* ── Reduced Motion Accessibility ── */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; transition: none; }
   .hero-enter, .hero-enter-delay-1, .hero-enter-delay-2, .hero-enter-delay-3 { animation: none; opacity: 1; }
   .card, .toc-step, .cta-card, .story-card, .btn, .deep-dive-toggle { transition: none; }
-  html { scroll-behavior: auto; }
+  .map-dot-anim, .map-line-anim, .map-name-anim, .map-header-anim { opacity: 1; transform: none; stroke-dashoffset: 0; animation: none !important; }
+  .map-header-group, .map-stats-group { opacity: 1; transform: none; transition: none; }
+  .scroll-hint-arrow { animation: none; }
+  .flip-card-inner { transition: none; }
+  html { scroll-behavior: auto; scroll-snap-type: none; }
 }
 
 
@@ -493,7 +732,7 @@ p { max-width: 680px; }
 .mobile-overlay.open { opacity: 1; pointer-events: all; }
 .mobile-overlay ul { list-style: none; text-align: center; }
 .mobile-overlay a {
-  font-family: var(--font); font-size: 1.4rem; font-weight: 500;
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 400;
   color: var(--text-dark); text-decoration: none; display: block;
   padding: 16px 0; transition: color 0.2s;
 }
@@ -516,7 +755,10 @@ p { max-width: 680px; }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  :root { --section-py: 64px; }
+  :root { --section-py: clamp(40px, 6vh, 72px); }
+  html { scroll-snap-type: none; }
+  .section, .map-section, .cta-section { min-height: auto; scroll-snap-align: none; }
+  .hero { min-height: 100svh; min-height: 100vh; scroll-snap-align: none; }
   .hero-grid { grid-template-columns: 1fr; text-align: center; }
   .hero-grid .map-container { order: -1; max-width: 480px; margin: 0 auto; }
   .hero-stats { justify-content: center; gap: 32px; flex-wrap: wrap; }
@@ -524,13 +766,23 @@ p { max-width: 680px; }
   .hero-text p { margin-left: auto; margin-right: auto; }
   .nav-links { display: none; }
   .nav-burger { display: block; }
-
+  .stat-callout { min-height: auto; }
   .toc-flow { flex-direction: column; }
   .toc-arrow { transform: rotate(90deg); }
   .card-grid { grid-template-columns: 1fr; }
   .tab-bar { gap: 0; }
   .tab-btn { padding: 10px 14px; font-size: 0.78rem; }
   .metric-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Large screens (1440p+) ── */
+@media (min-width: 1600px) {
+  :root {
+    --max-w: 1400px;
+    --edge-pad: clamp(40px, 5vw, 80px);
+  }
+  .nav-inner { max-width: 1400px; }
+  .stat-callout-num { font-family: var(--font-display); font-size: 5.5rem; }
 }
 </style>
 </head>
@@ -840,13 +1092,25 @@ function Nav() {
 
   useEffect(function() {
     var ticking = false;
+    var upDistance = 0;
+    var UP_THRESHOLD = 40;
     function onScroll() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(function() {
         var y = window.pageYOffset || document.documentElement.scrollTop;
-        var down = y > lastScroll.current && y > 80;
-        if (!menuOpen) setState({hidden: down, scrolled: y > 20});
+        var delta = y - lastScroll.current;
+        if (delta > 0) {
+          // Scrolling down — hide immediately, reset up counter
+          upDistance = 0;
+          if (!menuOpen && y > 80) setState({hidden: true, scrolled: y > 20});
+        } else if (delta < 0) {
+          // Scrolling up — accumulate distance before showing
+          upDistance += Math.abs(delta);
+          if (upDistance >= UP_THRESHOLD && !menuOpen) {
+            setState({hidden: false, scrolled: y > 20});
+          }
+        }
         lastScroll.current = y;
         ticking = false;
       });
@@ -885,17 +1149,41 @@ function Nav() {
   );
 }
 // ── India Map (v7 — grouped, square frame, interactive) ──
-function IndiaMap() {
-  var VBW = 1100;
-  var VBH = 800;
-  var SCALE = 600 / 663;
+function IndiaMap(props) {
+  var animate = props && props.animate;
+  var VBW = 1350;
+  var VBH = 1000;
+  // Crop viewBox to eliminate dead space (content starts ~y:200, ends ~y:950)
+  var VB_TOP = 110;
+  var VB_BOTTOM = 980;
+  var VB_VISIBLE_H = VB_BOTTOM - VB_TOP;
+  var SCALE = 875 / 663;
   var IMG_W = Math.round(663 * SCALE);
   var IMG_H = Math.round(530 * SCALE);
   var IMG_X = Math.floor((VBW - IMG_W) / 2);
   var IMG_Y = Math.floor((VBH - IMG_H) / 2);
 
+  var LXS = VBW / 1100;
+  var LYS = VBH / 800;
+
+  // Geographic order: north → south for cascade
+  var geoOrder = {'J&K':0, 'NCR':1, 'Rajasthan':2, 'Assam':3, 'Bihar / UP':4,
+    'Gujarat':5, 'MP':6, 'West Bengal':7, 'Maharashtra':8, 'Odisha':9,
+    'Telangana':10, 'Karnataka':11, 'Andhra Pradesh':12, 'Tamil Nadu':13, 'Kerala':14};
+  var GROUP_DELAY = 120;
+  var DOT_OFFSET = 0;
+  var LINE_OFFSET = 250;
+  var NAME_OFFSET = 400;
+
+  var tip = useState(null);
+  var tipData = tip[0]; var setTip = tip[1];
+
   function tr(ox, oy) {
     return [Math.round(ox * SCALE * 10 + IMG_X * 10) / 10, Math.round(oy * SCALE * 10 + IMG_Y * 10) / 10];
+  }
+
+  function del(groupIdx, phaseOffset) {
+    return ((groupIdx * GROUP_DELAY) + phaseOffset) + 'ms';
   }
 
   var elements = [];
@@ -903,26 +1191,29 @@ function IndiaMap() {
   DATA.cityGroups.forEach(function(group) {
     var state = group.state;
     var anchor = group.anchor;
-    var hx = group.hx;
+    var hx = Math.round(group.hx * LXS);
     var cities = group.cities;
     if (!cities.length) return;
+    var gi = geoOrder[state] !== undefined ? geoOrder[state] : 7;
 
-    // State header
-    var firstLy = cities[0].ly;
+    var firstLy = Math.round(cities[0].ly * LYS);
     var headerProps;
     if (anchor === 'middle') {
-      var avgX = 0; cities.forEach(function(c){ avgX += c.lx; }); avgX /= cities.length;
-      headerProps = {x: avgX, y: firstLy - 16, textAnchor: 'middle', className: 'map-state-header'};
+      var avgX = 0; cities.forEach(function(c){ avgX += c.lx * LXS; }); avgX /= cities.length;
+      headerProps = {x: Math.round(avgX), y: firstLy - 20, textAnchor: 'middle'};
     } else {
-      headerProps = {x: hx, y: firstLy - 10, textAnchor: anchor, className: 'map-state-header'};
+      headerProps = {x: hx, y: firstLy - 14, textAnchor: anchor};
     }
-    elements.push(e('text', Object.assign({key: 'h-' + state}, headerProps), state));
+    elements.push(e('text', Object.assign({key: 'h-' + state}, headerProps, {
+      className: 'map-state-header map-header-anim',
+      style: {animationDelay: del(gi, NAME_OFFSET)}
+    }), state));
 
-    // Cities
     cities.forEach(function(c) {
       var pos = tr(c.ox, c.oy);
       var cx = pos[0], cy = pos[1];
-      var lx = c.lx, ly = c.ly;
+      var lx = Math.round(c.lx * LXS);
+      var ly = Math.round(c.ly * LYS);
       var polyline;
       if (anchor === 'middle') {
         polyline = cx + ',' + cy + ' ' + cx + ',' + (ly - 8) + ' ' + lx + ',' + (ly - 8);
@@ -931,22 +1222,35 @@ function IndiaMap() {
       } else {
         polyline = (lx - 4) + ',' + ly + ' ' + cx + ',' + ly + ' ' + cx + ',' + cy;
       }
+      var pctX = (cx / VBW * 100).toFixed(1);
+      var pctY = ((cy - VB_TOP) / VB_VISIBLE_H * 100).toFixed(1);
       elements.push(
-        e('g', {key: c.n, className: 'map-city-group'},
-          e('polyline', {points: polyline, className: 'map-leader'}),
-          e('circle', {cx: cx, cy: cy, r: 3, fill: '#E63946', className: 'map-city-dot'}),
-          e('text', {x: lx, y: ly + 3, textAnchor: anchor, className: 'map-city-label'}, c.n)
+        e('g', {key: c.n, className: 'map-city-group',
+          onMouseEnter: function() { setTip({name: c.n, state: state, x: pctX, y: pctY}); },
+          onMouseLeave: function() { setTip(null); },
+          onClick: function() { setTip(function(prev) { return prev && prev.name === c.n ? null : {name: c.n, state: state, x: pctX, y: pctY}; }); }
+        },
+          e('polyline', {points: polyline, className: 'map-leader map-line-anim',
+            style: {animationDelay: del(gi, LINE_OFFSET)}}),
+          e('circle', {cx: cx, cy: cy, r: 4, fill: '#E63946',
+            className: 'map-city-dot map-dot-anim',
+            style: {animationDelay: del(gi, DOT_OFFSET)}}),
+          e('text', {x: lx, y: ly + 3, textAnchor: anchor,
+            className: 'map-city-label map-name-anim',
+            style: {animationDelay: del(gi, NAME_OFFSET)}}, c.n)
         )
       );
     });
   });
 
-  return e('div', {className: 'map-container'},
-    e('svg', {viewBox: '0 0 ' + VBW + ' ' + VBH, xmlns: 'http://www.w3.org/2000/svg'},
-      e('rect', {width: VBW, height: VBH, fill: 'transparent', rx: 8}),
+  return e('div', {className: 'map-container' + (animate ? ' map-entered' : ''), style: {position: 'relative'}},
+    e('svg', {viewBox: '0 ' + VB_TOP + ' ' + VBW + ' ' + VB_VISIBLE_H, xmlns: 'http://www.w3.org/2000/svg'},
       e('image', {href: 'data:image/png;base64,' + DATA.mapImage, x: IMG_X, y: IMG_Y, width: IMG_W, height: IMG_H}),
       elements
-    )
+    ),
+    tipData ? e('div', {className: 'map-tooltip visible', style: {left: tipData.x + '%', top: tipData.y + '%'}},
+      tipData.name, ' · ', tipData.state
+    ) : null
   );
 }
 
@@ -976,12 +1280,12 @@ function BarChart(props) {
           e('text', {
             x: x + barWidth / 2, y: y - 8,
             textAnchor: 'middle', fill: '#1A1A1A', fontSize: 12, fontWeight: 600,
-            fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif'
+            fontFamily: 'DM Sans, Helvetica Neue, Helvetica, Arial, sans-serif'
           }, d.displayValue || d.value),
           e('text', {
             x: x + barWidth / 2, y: chartH + 20,
             textAnchor: 'middle', fill: '#888', fontSize: 10,
-            fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif'
+            fontFamily: 'DM Sans, Helvetica Neue, Helvetica, Arial, sans-serif'
           }, d.label)
         );
       })
@@ -1204,76 +1508,103 @@ function Hero() {
           )
         )
       )
-    )
+    ),
+    e(ScrollHint)
   );
 }
-// ── Map Section ──
-function MapSection() {
-  var headerRef = useRef(null);
-  var sectionRef = useRef(null);
 
+// ── Scroll Hint (A) ──
+function ScrollHint() {
+  var ref = useRef(null);
   useEffect(function() {
-    var ticking = false;
     function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function() {
-        var section = sectionRef.current;
-        var header = headerRef.current;
-        if (!section || !header) { ticking = false; return; }
-
-        var rect = section.getBoundingClientRect();
-        var vh = window.innerHeight;
-
-        // p: 0 = section top at viewport bottom, 1 = section top at viewport top
-        var p = 1 - rect.top / vh;
-        p = Math.max(0, Math.min(p, 2));
-
-        var scale, tx;
-
-        if (p < 0.5) {
-          // Entering from below — scale up, no slide
-          var t = p / 0.5;
-          t = t * t * (3 - 2 * t); // smoothstep
-          scale = 1 + 0.18 * t;
-          tx = 0;
-        } else {
-          // In view or exiting upward — slide left, scale down
-          var t = Math.min((p - 0.5) / 0.9, 1);
-          t = t * t; // ease-in (slow start, accelerates)
-          scale = 1.18 - 0.18 * t;
-          tx = -80 * t;
-        }
-
-        header.style.transform = 'translateX(' + tx.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
-        ticking = false;
-      });
+      if (ref.current) ref.current.className = 'scroll-hint' + (window.pageYOffset > 50 ? ' hidden' : '');
     }
     window.addEventListener('scroll', onScroll, {passive: true});
-    onScroll();
     return function() { window.removeEventListener('scroll', onScroll); };
   }, []);
+  return e('div', {ref: ref, className: 'scroll-hint', 'aria-hidden': 'true'},
+    e('span', {className: 'scroll-hint-text'}, 'Scroll'),
+    e('span', {className: 'scroll-hint-arrow'})
+  );
+}
 
-  return e('section', {ref: sectionRef, className: 'map-section'},
+// ── Map Section ──
+function MapSection() {
+  var sectionRef = useRef(null);
+  var entered = useState(false);
+  var hasEntered = entered[0]; var setEntered = entered[1];
+
+  useEffect(function() {
+    var el = sectionRef.current;
+    if (!el) return;
+    var observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        setEntered(true);
+        observer.unobserve(el);
+      }
+    }, {threshold: 0.15});
+    observer.observe(el);
+    return function() { observer.disconnect(); };
+  }, []);
+
+  var cls = hasEntered ? ' entered' : '';
+
+  return e('section', {ref: sectionRef, id: 'map', className: 'map-section'},
     e('div', {className: 'grain', 'aria-hidden': 'true'}),
-    e('div', {className: 'container'},
-      e('div', {ref: headerRef, style: {willChange: 'transform', transformOrigin: 'left center'}},
-        e('h2', {style: {marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.04em'}}, 'Our Presence'),
-        e('div', {style: {display: 'flex', gap: 40, marginBottom: 28}},
-          e('div', null,
-            e('div', {style: {fontSize: '2.2rem', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '38'),
-            e('div', {style: {fontSize: '0.72rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 4}}, 'Cities')
-          ),
-          e('div', null,
-            e('div', {style: {fontSize: '2.2rem', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '150', e('span', {style: {color: 'var(--red)', fontSize: '1.4rem'}}, '+')),
-            e('div', {style: {fontSize: '0.72rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 4}}, 'Centres')
+    // Header pinned to edge-pad — no max-width, matches nav logo position
+    e('div', {style: {padding: '0 var(--edge-pad)'}},
+      e('h2', {className: 'map-header-group' + cls,
+        style: {marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.03em',
+          fontSize: 'clamp(2.4rem, 5vw, 3.8rem)', fontWeight: 700}
+      }, 'Our Presence'),
+      e('div', {className: 'map-stats-group' + cls, style: {display: 'flex', gap: 'clamp(24px, 4vw, 48px)', marginBottom: 14, flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between'}},
+        e('div', null,
+          e('div', {style: {fontSize: '0.75rem', color: 'var(--red)', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, marginBottom: 8}}, '2025–26'),
+          e('div', {style: {display: 'flex', gap: 'clamp(24px, 3.5vw, 48px)', flexWrap: 'wrap'}},
+            e('div', null,
+              e('div', {style: {fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '38'),
+              e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Cities')
+            ),
+            e('div', null,
+              e('div', {style: {fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '150', e('span', {style: {color: 'var(--red)', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)'}}, '+')),
+              e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Centres')
+            ),
+            e('div', null,
+              e('div', {style: {fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '6,000'),
+              e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Students')
+            ),
+            e('div', null,
+              e('div', {style: {fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '5,200'),
+              e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Volunteers')
+            ),
+            e('div', null,
+              e('div', {style: {fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', fontWeight: 700, color: 'var(--text-dark)', lineHeight: 1}}, '60'),
+              e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Full-Time Staff')
+            )
           )
         )
       )
     ),
+    // Map — full width, scroll on mobile
     e('div', {className: 'map-wide'},
-      e(Reveal, {type: 'scale'},
-        e(IndiaMap)
+      e('div', {className: 'map-scroll'},
+        e(IndiaMap, {animate: hasEntered})
+      )
+    ),
+    // Program portfolio strip below map
+    e('div', {style: {padding: '16px var(--edge-pad) 0'}},
+      e(Reveal, null,
+        e('div', {style: {display: 'flex', gap: 40, flexWrap: 'wrap'}},
+          [{name: 'U&I Teach', desc: 'Flagship afterschool tutoring — FLN, life skills, career readiness', icon: '📖'},
+           {name: 'U&I Empower', desc: 'Corporate volunteer engagement — 4,276 mobilized in 2022-23', icon: '🏢'}
+          ].map(function(p, i) {
+            return e('div', {key: i, style: {flex: '1 1 240px', minWidth: 200}},
+              e('div', {style: {fontSize: '1.2rem', marginBottom: 5}}, p.icon, ' ', e('span', {style: {fontWeight: 600, color: 'var(--text-dark)', fontSize: '0.95rem'}}, p.name)),
+              e('div', {style: {fontSize: '0.85rem', color: 'var(--text-gray)'}}, p.desc)
+            );
+          })
+        )
       )
     )
   );
@@ -1284,6 +1615,7 @@ function StorySection() {
   return e('section', {className: 'section', id: 'story', 'aria-label': 'Our founding story'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('p', {className: 'label', style: {marginBottom: 8}}, 'Our Story'),
         e('h2', {style: {marginBottom: 16}}, 'It started with a question')
       ),
@@ -1324,6 +1656,7 @@ function SDGSection() {
   return e('section', {className: 'section section-alt', id: 'sdg', 'aria-label': 'Why education matters'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('div', {style: {display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8, flexWrap: 'wrap'}},
           e('p', {className: 'label'}, DATA.sdg.subtitle),
           e(DeepDiveToggle, {active: open, onToggle: function(){ setOpen(!open); }})
@@ -1372,6 +1705,7 @@ function TOCSection() {
   return e('section', {className: 'section', id: 'toc', 'aria-label': 'Theory of Change'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('div', {style: {display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8, flexWrap: 'wrap'}},
           e('p', {className: 'label'}, 'Theory of Change'),
           e(DeepDiveToggle, {active: open, onToggle: function(){ setOpen(!open); }})
@@ -1380,11 +1714,12 @@ function TOCSection() {
         e('p', {style: {fontSize: '1.05rem', marginBottom: 12, maxWidth: 720}}, DATA.toc.statement)
       ),
 
-      // Flow diagram with staggered reveals
+      // Flow diagram with alternating reveals
       e('div', {className: 'toc-flow'},
         DATA.toc.steps.map(function(step, i) {
+          var dir = i % 2 === 0 ? 'left' : 'right';
           var items = [
-            e(Reveal, {key: 'step-' + i, stagger: i + 1},
+            e(Reveal, {key: 'step-' + i, type: dir, stagger: i + 1},
               e('div', {className: 'toc-step'},
                 e('h4', null, step.title),
                 e('p', null, step.desc)
@@ -1434,6 +1769,7 @@ function ProgramsSection() {
   return e('section', {className: 'section section-alt', id: 'programs', 'aria-label': 'Our programs'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('p', {className: 'label', style: {marginBottom: 8}}, 'Programs'),
         e('h2', {style: {marginBottom: 16}}, 'Three Programs, One Mission'),
         e('p', {style: {marginBottom: 32, fontSize: '1.05rem'}}, 'All programs operate under the U&I Teach umbrella — an integrated model of volunteer-driven afterschool education serving children aged 7 to 21.')
@@ -1444,6 +1780,34 @@ function ProgramsSection() {
             e(ProgramCard, {program: prog})
           );
         })
+      ),
+      e(Reveal, null,
+        e('div', {className: 'compare-wrap'},
+          e('table', {className: 'compare-table'},
+            e('thead', null,
+              e('tr', null,
+                e('th', null, ''),
+                e('th', null, '📖 Teach FLN'),
+                e('th', null, '✊ Teach Girls'),
+                e('th', null, '🚀 Teach for Careers')
+              )
+            ),
+            e('tbody', null,
+              [{label: 'Ages', vals: ['7–14 years', '7–18 years', '14–21 years']},
+               {label: 'Ratio', vals: ['1:3', '1:1 or 1:2', '1:3 (group)']},
+               {label: 'Method', vals: ['TaRL (J-PAL validated)', 'Gender-matched mentoring', 'Career exposure + counselling']},
+               {label: 'Duration', vals: ['9 months', '9 months (25–30 sessions)', '6–9 months']},
+               {label: 'Key Metric', vals: ['Reading level progression', 'Self-esteem (Rosenberg Scale)', 'Career action plans created']},
+               {label: 'Evidence', vals: ['6 RCTs, 0.07–0.85 SD', 'UNICEF Life Skills framework', 'ILO/OECD frameworks']}
+              ].map(function(row, ri) {
+                return e('tr', {key: ri},
+                  e('td', {className: 'row-label'}, row.label),
+                  row.vals.map(function(v, vi) { return e('td', {key: vi}, v); })
+                );
+              })
+            )
+          )
+        )
       )
     )
   );
@@ -1457,6 +1821,7 @@ function ImpactSection() {
   return e('section', {className: 'section', id: 'impact', 'aria-label': 'Our impact'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('div', {style: {display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8, flexWrap: 'wrap'}},
           e('p', {className: 'label'}, 'Impact'),
           e(DeepDiveToggle, {active: open, onToggle: function(){ setOpen(!open); }})
@@ -1467,15 +1832,27 @@ function ImpactSection() {
 
       e('div', {className: 'metric-row'},
         [
-          {end: 65000, suffix: '+', label: 'Lives Impacted'},
-          {end: 30000, suffix: '+', label: 'Volunteers Mobilized'},
-          {end: 117, suffix: '+', label: 'Learning Centres'},
-          {end: 45, suffix: '+', label: 'Cities Across India'}
+          {end: 65000, suffix: '+', label: 'Lives Impacted', back: 'Cumulative beneficiaries across all programs since 2011, measured through enrolment records.'},
+          {end: 30000, suffix: '+', label: 'Volunteers Mobilized', back: 'Individual volunteers who completed at least one academic cycle (9 months).'},
+          {end: 117, suffix: '+', label: 'Learning Centres', back: 'Active centres as of 2024–25 across shelter homes, community spaces, and schools.'},
+          {end: 45, suffix: '+', label: 'Cities Across India', back: 'Cities with at least one active learning centre and trained volunteer cohort.'}
         ].map(function(m, i) {
+          var fs = useState(false);
+          var flipped = fs[0]; var setFlipped = fs[1];
           return e(Reveal, {key: i, stagger: i + 1},
-            e('div', {className: 'metric-box'},
-              e('div', {className: 'metric-num'}, e('span', {className: 'red'}, e(CountUp, {end: m.end, suffix: m.suffix, duration: 1800}))),
-              e('div', {className: 'metric-label'}, m.label)
+            e('div', {className: 'flip-card' + (flipped ? ' flipped' : ''), onClick: function() { setFlipped(!flipped); }, style: {minHeight: 160}},
+              e('div', {className: 'flip-card-inner'},
+                e('div', {className: 'flip-card-front', style: {textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}},
+                  e('div', {className: 'metric-num'}, e('span', {className: 'red'}, e(CountUp, {end: m.end, suffix: m.suffix, duration: 1800}))),
+                  e('div', {className: 'metric-label'}, m.label),
+                  e('div', {className: 'flip-hint'}, '↻ Tap for methodology')
+                ),
+                e('div', {className: 'flip-card-back', style: {display: 'flex', flexDirection: 'column', justifyContent: 'center'}},
+                  e('div', {className: 'metric-label', style: {marginBottom: 8}}, m.label),
+                  e('p', {style: {fontSize: '0.85rem', color: 'var(--text-body)', lineHeight: 1.6, maxWidth: 'none'}}, m.back),
+                  e('div', {className: 'flip-hint'}, '↻ Tap to flip back')
+                )
+              )
             )
           );
         })
@@ -1506,11 +1883,19 @@ function ImpactSection() {
 // ── Stories Section ──
 function StoryCard(props) {
   var story = props.story;
+  var idx = props.idx || 0;
   var dd = useState(false);
   var open = dd[0]; var setOpen = dd[1];
+  var badges = [
+    {label: 'Teach FLN', cls: 'fln', journey: 'Beginner → Story Reader'},
+    {label: 'Teach Girls', cls: 'girls', journey: 'Mentee → Aspiring Engineer'},
+    {label: 'Volunteer', cls: 'fln', journey: '2hrs/week → Life Changed'}
+  ];
+  var badge = badges[idx] || badges[0];
 
   return e('div', {className: 'story-card'},
-    e('p', {style: {fontStyle: 'italic', fontSize: '1.02rem', lineHeight: 1.8}}, story.quote),
+    e('span', {className: 'story-badge ' + badge.cls}, badge.label, ' · ', badge.journey),
+    e('p', {className: 'story-quote', style: {position: 'relative', zIndex: 1}}, story.quote),
     e('p', {className: 'story-attr'}, story.attr),
     e('div', {style: {marginTop: 12}},
       e(DeepDiveToggle, {active: open, onToggle: function(){ setOpen(!open); }})
@@ -1525,6 +1910,7 @@ function StoriesSection() {
   return e('section', {className: 'section section-alt', id: 'stories', 'aria-label': 'Stories of change'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('p', {className: 'label', style: {marginBottom: 8}}, 'Stories of Change'),
         e('h2', {style: {marginBottom: 16}}, 'Voices From the Ground'),
         e('p', {style: {marginBottom: 32, fontSize: '0.92rem', color: 'var(--text-gray)'}}, 'These are composite narratives — real patterns drawn from many children\'s journeys, with identities protected.')
@@ -1532,7 +1918,7 @@ function StoriesSection() {
       e('div', {className: 'card-grid'},
         DATA.stories.map(function(story, i) {
           return e(Reveal, {key: i, stagger: i + 1},
-            e(StoryCard, {story: story})
+            e(StoryCard, {story: story, idx: i})
           );
         })
       )
@@ -1555,6 +1941,7 @@ function StakeholderSection() {
   return e('section', {className: 'section', id: 'stakeholders', 'aria-label': 'Get involved'},
     e('div', {className: 'container'},
       e(Reveal, null,
+        e('div', {className: 'section-heading-line'}),
         e('p', {className: 'label', style: {marginBottom: 8}}, 'Your Journey'),
         e('h2', {style: {marginBottom: 20}}, 'How You Can Be Part of This')
       ),
@@ -1596,6 +1983,7 @@ function CTASection() {
   return e('section', {className: 'cta-section'},
     e('div', {className: 'container', style: {position: 'relative', zIndex: 1}},
       e(Reveal, null,
+        e('div', {style: {width: 40, height: 2, background: 'var(--red)', marginBottom: 16, borderRadius: 1}}),
         e('h2', null, 'Ready to make a difference?'),
         e('p', {style: {maxWidth: 520}}, 'Every journey starts with a single step. Whether you want to volunteer, partner, donate, or collaborate — there\'s a place for you at U&I.')
       ),
@@ -1616,6 +2004,65 @@ function CTASection() {
         })
       )
     )
+  );
+}
+
+// ── B: Stat Callout ──
+function StatCallout(props) {
+  return e(Reveal, null,
+    e('div', {className: 'stat-callout'},
+      e('div', {className: 'stat-callout-num'},
+        props.num,
+        props.suffix ? e('span', {className: 'red'}, props.suffix) : null
+      ),
+      e('div', {className: 'stat-callout-label'}, props.label)
+    )
+  );
+}
+
+// ── C: Progress Dots ──
+function ProgressDots() {
+  var sections = [
+    {id: 'hero', label: 'Hero'},
+    {id: 'map', label: 'Map'},
+    {id: 'story', label: 'Story'},
+    {id: 'sdg', label: 'SDG'},
+    {id: 'toc', label: 'TOC'},
+    {id: 'programs', label: 'Programs'},
+    {id: 'impact', label: 'Impact'},
+    {id: 'stories', label: 'Stories'},
+    {id: 'stakeholders', label: 'Involve'}
+  ];
+  var active = useState('hero');
+  var current = active[0]; var setCurrent = active[1];
+
+  useEffect(function() {
+    var observers = [];
+    sections.forEach(function(s) {
+      var el = document.getElementById(s.id);
+      if (!el) return;
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) setCurrent(s.id);
+      }, {threshold: 0.3});
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return function() { observers.forEach(function(o) { o.disconnect(); }); };
+  }, []);
+
+  return e('nav', {className: 'progress-dots', 'aria-label': 'Section navigation'},
+    sections.map(function(s) {
+      return e('button', {
+        key: s.id,
+        className: 'progress-dot' + (current === s.id ? ' active' : ''),
+        onClick: function() {
+          var el = document.getElementById(s.id);
+          if (el) el.scrollIntoView({behavior: 'smooth'});
+        },
+        'aria-label': s.label,
+        title: s.label
+      });
+    })
   );
 }
 
@@ -1647,7 +2094,7 @@ function Divider() { return e('div', {className: 'section-divider', 'aria-hidden
 function Footer() {
   return e('footer', {className: 'footer'},
     e(Reveal, {tag: 'div', className: 'container'},
-      e('p', null, '© 2025 U&I Trust. CAF India · CAF America · Global Giving · Google for Nonprofits · Great Place to Work')
+      e('p', null, '© 2026 U&I Trust. CAF India · CAF America · Global Giving · Google for Nonprofits · Great Place to Work')
     )
   );
 }
@@ -1657,9 +2104,12 @@ function App() {
   return e(React.Fragment, null,
     e('a', {id: 'main-content'}),
     e(ScrollProgress),
+    e(ProgressDots),
     e(Nav),
     e(Hero),
     e(MapSection),
+    e(Divider),
+    e(StatCallout, {num: '65,000', suffix: '+', label: 'lives transformed since 2011'}),
     e(Divider),
     e(StorySection),
     e(Divider),
@@ -1668,6 +2118,8 @@ function App() {
     e(TOCSection),
     e(Divider),
     e(ProgramsSection),
+    e(Divider),
+    e(StatCallout, {num: '₹800', label: 'per child per year — that\'s all it takes'}),
     e(Divider),
     e(ImpactSection),
     e(Divider),
