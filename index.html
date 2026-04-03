@@ -1598,14 +1598,13 @@ function MapSection() {
   return e('section', {ref: sectionRef, id: 'map', className: 'map-section'},
     e('div', {className: 'grain', 'aria-hidden': 'true'}),
     // Header
-    e('div', {className: 'px-[var(--edge-pad)]'},
+    e('div', {className: 'px-[var(--edge-pad)] mb-3 md:mb-0'},
       e('h2', {className: 'map-header-group font-display uppercase tracking-wider font-bold text-[clamp(2rem,4vw,3rem)]' + cls
       }, 'Our Presence ', e('span', {className: 'text-red'}, '2025–26'))
     ),
-    // Map with stats overlay
-    e('div', {className: 'relative'},
-      // Stats overlay — floats on top-left of map
-      e('div', {className: 'map-stats-group absolute top-0 left-0 z-[5] pt-2 px-[var(--edge-pad)] flex flex-wrap gap-[clamp(16px,3vw,36px)]' + cls},
+    // Stats — stacked on mobile, overlay on desktop
+    e('div', {className: 'px-[var(--edge-pad)] mb-4 md:mb-0'},
+      e('div', {className: 'map-stats-group flex flex-wrap gap-[clamp(16px,3vw,36px)]' + cls},
         e('div', null,
           e('div', {className: 'map-stat-val'}, '38'),
           e('div', {className: 'map-stat-lbl'}, 'Cities')
@@ -1622,12 +1621,12 @@ function MapSection() {
           e('div', {className: 'map-stat-val'}, '5,200'),
           e('div', {className: 'map-stat-lbl'}, 'Volunteers')
         )
-      ),
-      // Map — full width
-      e('div', {className: 'map-wide'},
-        e('div', {className: 'map-scroll'},
-          e(IndiaMap, {animate: hasEntered})
-        )
+      )
+    ),
+    // Map — full width
+    e('div', {className: 'map-wide'},
+      e('div', {className: 'map-scroll'},
+        e(IndiaMap, {animate: hasEntered})
       )
     )
   );
