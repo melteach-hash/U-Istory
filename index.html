@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script>
 tailwind.config = {
@@ -25,8 +25,9 @@ tailwind.config = {
         gray: { text: '#888888', mid: '#E0E0E0', light: '#F2F2F2', off: '#FAFAFA' }
       },
       fontFamily: {
-        display: ['Instrument Serif', 'Georgia', 'Times New Roman', 'serif'],
-        body: ['DM Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+        display: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        body: ['DM Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        accent: ['Georgia', 'Times New Roman', 'serif']
       },
       maxWidth: {
         site: 'clamp(1000px, 80vw, 1400px)'
@@ -53,7 +54,8 @@ tailwind.config = {
   --red-dark: #C62828;
   --rose: rgba(230, 57, 70, 0.06);
   --font: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-accent: Georgia, 'Times New Roman', serif;
   --max-w: clamp(1000px, 80vw, 1400px);
   /* Spacing scale — viewport-relative for autoscaling */
   --section-py: clamp(48px, 8vh, 120px);
@@ -75,11 +77,11 @@ body {
 }
 
 /* ── Typography ── */
-h1, h2, h3, h4 { color: var(--red); font-weight: 600; line-height: 1.2; }
-h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.03em; font-weight: 400; }
-h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -0.02em; font-weight: 400; }
-h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
-h4 { font-size: 1.1rem; }
+h1, h2, h3, h4 { color: var(--red); font-weight: 700; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--font-display); }
+h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); letter-spacing: 0.05em; }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); letter-spacing: 0.05em; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+h4 { font-size: 1rem; }
 p { max-width: 680px; }
 .label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-gray); font-weight: 500; }
 
@@ -231,7 +233,7 @@ p { max-width: 680px; }
   display: flex; justify-content: center; gap: 40px; margin-bottom: 20px;
   font-size: 0.82rem; color: var(--text-body); text-align: center;
 }
-.timeline-stat-val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; color: var(--text-dark); line-height: 1.2; }
+.timeline-stat-val { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--text-dark); line-height: 1.2; }
 .timeline-stat-label { font-size: 0.7rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 .timeline-track { position: relative; width: 100%; padding: 0; }
 .timeline-input {
@@ -257,7 +259,8 @@ p { max-width: 680px; }
 .timeline-years-bottom { margin-top: 3px; }
 .timeline-year-active { color: var(--red); font-weight: 600; }
 @media (max-width: 640px) {
-  .hero-doodle { display: none; }
+  .hero-doodle.d1, .hero-doodle.d2, .hero-doodle.d3,
+  .hero-doodle.d4, .hero-doodle.d5, .hero-doodle.d6 { display: none; }
   .timeline-stats { gap: 20px; flex-wrap: wrap; }
   .timeline-stat-val { font-size: 1.2rem; }
   .timeline-years span { font-size: 0.7rem; }
@@ -269,16 +272,17 @@ p { max-width: 680px; }
 .hero-headline { margin-bottom: 16px; }
 .hero-word {
   display: block; font-family: var(--font-display); font-size: clamp(3.2rem, 7.5vw, 5.6rem);
-  font-weight: 400; color: var(--text-dark); letter-spacing: -0.04em;
-  line-height: 1; margin-bottom: 6px;
+  font-weight: 700; color: var(--text-dark); letter-spacing: 0.06em;
+  line-height: 1; margin-bottom: 6px; text-transform: uppercase;
 }
 .hero-sub-line {
-  display: block; font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 400; font-style: italic; color: var(--red); letter-spacing: -0.01em; line-height: 1.2;
+  display: block; font-family: var(--font-accent); font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 400; font-style: italic; color: var(--red); letter-spacing: 0.01em; line-height: 1.2;
+  text-transform: none;
 }
 @media (max-width: 640px) {
   .hero-word { font-family: var(--font-display); font-size: clamp(2.4rem, 12vw, 3.6rem); }
-  .hero-sub-line { font-family: var(--font-display); font-size: clamp(1.2rem, 5vw, 1.8rem); }
+  .hero-sub-line { font-family: var(--font-accent); font-size: clamp(1.2rem, 5vw, 1.8rem); }
 }
 /* ── Grain Texture Overlay ── */
 .grain {
@@ -289,13 +293,13 @@ p { max-width: 680px; }
 /* hero-text p removed — V7 uses centered layout */
 .hero-stats { display: flex; gap: 24px; margin-top: 36px; align-items: center; flex-wrap: wrap; justify-content: center; }
 @media (min-width: 768px) { .hero-stats { gap: 40px; } }
-.hero-stat-num { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 400; color: var(--text-dark); line-height: 1; display: flex; align-items: center; justify-content: center; }
+.hero-stat-num { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 700; color: var(--text-dark); line-height: 1; display: flex; align-items: center; justify-content: center; }
 .hero-stat-num span { color: var(--red); }
 .hero-stat-num .plus { font-size: clamp(1.2rem, 2vw, 1.6rem); display: inline-block; }
 .hero-stat-label { font-size: 0.72rem; color: var(--text-gray); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
 
 /* ── Map ── */
-.map-stat-val { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 400; font-family: var(--font-display); color: var(--text-dark); line-height: 1; }
+.map-stat-val { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; font-family: var(--font-display); color: var(--text-dark); line-height: 1; }
 .map-stat-lbl { font-size: 0.78rem; color: var(--text-gray); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; font-weight: 600; }
 .map-section {
   background: #FBF8F0; padding: clamp(12px, 2vh, 32px) 0;
@@ -316,11 +320,11 @@ p { max-width: 680px; }
   filter: url(#grain-filter); background: white;
 }
 .map-container { position: relative; width: 100%; margin: 0 auto; }
-.map-wide { margin: 0; padding: 0 clamp(16px, 3vw, 56px); }
+.map-wide { margin: 0; padding: 0 clamp(8px, 2vw, 40px); }
 .map-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 @media (max-width: 640px) {
   .map-scroll { overflow-x: scroll; }
-  .map-scroll .map-container { min-width: 700px; }
+  .map-scroll .map-container { min-width: 480px; }
 }
 .map-container svg { width: 100%; height: auto; }
 .map-city-dot {
@@ -328,14 +332,14 @@ p { max-width: 680px; }
   transition: r 0.2s ease, filter 0.2s ease;
 }
 .map-city-label {
-  font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 15px; font-weight: 700; fill: #1a1a1a;
   letter-spacing: 0.01em;
   transition: fill 0.2s ease;
   pointer-events: none;
 }
 .map-state-header {
-  font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px; font-weight: 700; fill: #E63946;
   letter-spacing: 0.1em; text-transform: uppercase;
 }
@@ -377,7 +381,7 @@ p { max-width: 680px; }
 .metric-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 48px 0; }
 @media (min-width: 768px) { .metric-row { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; } }
 .metric-box { text-align: center; padding: 24px 16px; }
-.metric-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 400; color: var(--text-dark); line-height: 1; }
+.metric-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 700; color: var(--text-dark); line-height: 1; }
 .metric-num .red { color: var(--red); }
 .metric-label { font-size: 0.82rem; color: var(--text-gray); margin-top: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
 
@@ -392,7 +396,7 @@ p { max-width: 680px; }
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1); cursor: default;
 }
 .toc-step:hover { border-color: var(--red); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(230,57,70,0.08); }
-.toc-step h4 { font-size: 0.9rem; margin-bottom: 6px; font-family: var(--font-display); font-weight: 400; font-size: 1rem; }
+.toc-step h4 { font-size: 0.9rem; margin-bottom: 6px; font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .toc-step p { font-size: 0.78rem; color: var(--text-gray); max-width: 180px; margin: 0 auto; }
 .toc-arrow { color: var(--red); font-size: 1.4rem; font-weight: 300; }
 
@@ -405,10 +409,10 @@ p { max-width: 680px; }
 .story-card:hover { border-color: var(--red); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(230,57,70,0.08); }
 .story-card::before {
   content: '\201C'; position: absolute; top: 12px; left: 20px;
-  font-size: 4rem; color: var(--red-light); font-family: var(--font-display); line-height: 1;
+  font-size: 4rem; color: var(--red-light); font-family: var(--font-accent); line-height: 1;
 }
 .story-card p { font-size: 0.95rem; position: relative; z-index: 1; }
-.story-card .story-quote { font-family: var(--font-display); font-size: 1.08rem; font-style: italic; line-height: 1.8; }
+.story-card .story-quote { font-family: var(--font-accent); font-size: 1.08rem; font-style: italic; line-height: 1.8; }
 .story-card .story-attr { font-size: 0.82rem; color: var(--text-gray); margin-top: 16px; font-style: italic; }
 
 /* ── CTA Section ── */
@@ -428,7 +432,7 @@ p { max-width: 680px; }
   pointer-events: none; z-index: 0; opacity: 0.04;
   filter: url(#grain-filter); background: white;
 }
-.cta-section h2 { color: var(--white); margin-bottom: 12px; font-family: var(--font-display); font-weight: 400; }
+.cta-section h2 { color: var(--white); margin-bottom: 12px; font-family: var(--font-display); font-weight: 700; }
 .cta-section p { color: rgba(255,255,255,0.7); margin-bottom: 28px; }
 .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 36px; }
 .cta-card {
@@ -603,8 +607,8 @@ p { max-width: 680px; }
   filter: url(#grain-filter); background: white;
 }
 .stat-callout-num {
-  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400;
-  color: var(--text-dark); line-height: 1; letter-spacing: -0.03em;
+  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700;
+  color: var(--text-dark); line-height: 1; letter-spacing: 0.02em;
   position: relative; z-index: 1;
 }
 .stat-callout-num .red { color: var(--red); }
@@ -612,23 +616,6 @@ p { max-width: 680px; }
   font-size: 0.82rem; color: var(--text-gray); letter-spacing: 0.1em;
   text-transform: uppercase; margin-top: 8px; font-weight: 500;
   position: relative; z-index: 1;
-}
-
-/* ── C: Progress Dots ── */
-.progress-dots {
-  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
-  z-index: 90; display: flex; flex-direction: column; gap: 12px;
-}
-.progress-dot {
-  width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--mid-gray);
-  background: transparent; cursor: pointer; transition: all 0.3s ease;
-  padding: 0;
-}
-.progress-dot:hover { border-color: var(--red); transform: scale(1.3); }
-.progress-dot.active { background: var(--red); border-color: var(--red); transform: scale(1.2); }
-@media (max-width: 640px) {
-  .progress-dots { right: 10px; gap: 10px; }
-  .progress-dot { width: 6px; height: 6px; }
 }
 
 /* ── D: Program Comparison Table ── */
@@ -697,7 +684,7 @@ p { max-width: 680px; }
   position: absolute; pointer-events: none;
   background: var(--text-dark); color: var(--white);
   padding: 6px 12px; border-radius: 6px; font-size: 0.75rem;
-  font-weight: 500; letter-spacing: 0.02em; font-family: 'DM Sans', var(--font);
+  font-weight: 500; letter-spacing: 0.02em; font-family: var(--font-display);
   white-space: nowrap; z-index: 20; opacity: 0;
   transition: opacity 0.2s ease; transform: translate(-50%, -100%);
   margin-top: -12px;
@@ -763,9 +750,9 @@ p { max-width: 680px; }
 .mobile-overlay.open { opacity: 1; pointer-events: all; }
 .mobile-overlay ul { list-style: none; text-align: center; }
 .mobile-overlay a {
-  font-family: var(--font-display); font-size: 1.4rem; font-weight: 400;
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
   color: var(--text-dark); text-decoration: none; display: block;
-  padding: 16px 0; transition: color 0.2s;
+  padding: 16px 0; transition: color 0.2s; text-transform: uppercase; letter-spacing: 0.06em;
 }
 .mobile-overlay a:hover { color: var(--red); }
 
@@ -821,7 +808,7 @@ p { max-width: 680px; }
     --edge-pad: clamp(40px, 5vw, 80px);
   }
   .nav-inner { max-width: 1400px; }
-  .stat-callout-num { font-family: var(--font-display); font-size: 5.5rem; }
+  .stat-callout-num { font-family: var(--font-display); font-size: 5.5rem; font-weight: 700; }
 }
 </style>
 </head>
@@ -1209,7 +1196,7 @@ function Nav() {
 // ── India Map (v7 — grouped, square frame, interactive) ──
 function IndiaMap(props) {
   var animate = props && props.animate;
-  var VBW = 1350;
+  var VBW = 1050;
   var VBH = 1000;
   // Crop viewBox to eliminate dead space (content starts ~y:200, ends ~y:950)
   var VB_TOP = 110;
@@ -1337,13 +1324,13 @@ function BarChart(props) {
           }),
           e('text', {
             x: x + barWidth / 2, y: y - 8,
-            textAnchor: 'middle', fill: '#1A1A1A', fontSize: 12, fontWeight: 600,
-            fontFamily: 'DM Sans, Helvetica Neue, Helvetica, Arial, sans-serif'
+            textAnchor: 'middle', fill: '#1A1A1A', fontSize: 12, fontWeight: 700,
+            fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif'
           }, d.displayValue || d.value),
           e('text', {
             x: x + barWidth / 2, y: chartH + 20,
             textAnchor: 'middle', fill: '#888', fontSize: 10,
-            fontFamily: 'DM Sans, Helvetica Neue, Helvetica, Arial, sans-serif'
+            fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif'
           }, d.label)
         );
       })
@@ -1612,7 +1599,7 @@ function MapSection() {
     e('div', {className: 'grain', 'aria-hidden': 'true'}),
     // Header
     e('div', {className: 'px-[var(--edge-pad)]'},
-      e('h2', {className: 'map-header-group font-display uppercase tracking-wide font-normal text-[clamp(2rem,4vw,3rem)]' + cls
+      e('h2', {className: 'map-header-group font-display uppercase tracking-wider font-bold text-[clamp(2rem,4vw,3rem)]' + cls
       }, 'Our Presence ', e('span', {className: 'text-red'}, '2025–26'))
     ),
     // Map with stats overlay
@@ -1634,10 +1621,6 @@ function MapSection() {
         e('div', null,
           e('div', {className: 'map-stat-val'}, '5,200'),
           e('div', {className: 'map-stat-lbl'}, 'Volunteers')
-        ),
-        e('div', null,
-          e('div', {className: 'map-stat-val'}, '60'),
-          e('div', {className: 'map-stat-lbl'}, 'Full-Time Staff')
         )
       ),
       // Map — full width
@@ -2061,51 +2044,6 @@ function StatCallout(props) {
 }
 
 // ── C: Progress Dots ──
-function ProgressDots() {
-  var sections = [
-    {id: 'hero', label: 'Hero'},
-    {id: 'map', label: 'Map'},
-    {id: 'story', label: 'Story'},
-    {id: 'sdg', label: 'SDG'},
-    {id: 'toc', label: 'TOC'},
-    {id: 'programs', label: 'Programs'},
-    {id: 'impact', label: 'Impact'},
-    {id: 'stories', label: 'Stories'},
-    {id: 'stakeholders', label: 'Involve'}
-  ];
-  var active = useState('hero');
-  var current = active[0]; var setCurrent = active[1];
-
-  useEffect(function() {
-    var observers = [];
-    sections.forEach(function(s) {
-      var el = document.getElementById(s.id);
-      if (!el) return;
-      var obs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting) setCurrent(s.id);
-      }, {threshold: 0.3});
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return function() { observers.forEach(function(o) { o.disconnect(); }); };
-  }, []);
-
-  return e('nav', {className: 'progress-dots', 'aria-label': 'Section navigation'},
-    sections.map(function(s) {
-      return e('button', {
-        key: s.id,
-        className: 'progress-dot' + (current === s.id ? ' active' : ''),
-        onClick: function() {
-          var el = document.getElementById(s.id);
-          if (el) el.scrollIntoView({behavior: 'smooth'});
-        },
-        'aria-label': s.label,
-        title: s.label
-      });
-    })
-  );
-}
-
 // ── Scroll Progress Bar ──
 function ScrollProgress() {
   var ref = useRef(null);
@@ -2144,7 +2082,6 @@ function App() {
   return e(React.Fragment, null,
     e('a', {id: 'main-content'}),
     e(ScrollProgress),
-    e(ProgressDots),
     e(Nav),
     e(Hero),
     e(MapSection),
