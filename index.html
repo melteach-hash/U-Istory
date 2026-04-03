@@ -1577,8 +1577,10 @@ function MapSection() {
       e('h2', {className: 'map-header-group' + cls,
         style: {marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.03em',
           fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 400, fontFamily: 'var(--font-display)'}
-      }, 'Our Presence - 2025/26'),
-      e('div', {className: 'map-stats-group' + cls, style: {display: 'flex', gap: 'clamp(24px, 4vw, 48px)', marginBottom: 2, flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between'}},
+      }, 'Our Presence ', e('span', {style: {color: 'var(--red)'}}, '2025–26')),
+      e('div', {className: 'map-stats-group' + cls, style: {display: 'flex', gap: 'clamp(24px, 4vw, 48px)', marginBottom: 0, flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between'}},
+        e('div', null,
+          e('div', {style: {display: 'flex', gap: 'clamp(24px, 3.5vw, 48px)', flexWrap: 'wrap'}},
             e('div', null,
               e('div', {style: {fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', fontWeight: 400, fontFamily: 'var(--font-display)', color: 'var(--text-dark)', lineHeight: 1}}, '38'),
               e('div', {style: {fontSize: '0.82rem', color: 'var(--text-gray)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 5, fontWeight: 600}}, 'Cities')
@@ -2138,4 +2140,4 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')).render(e(App));
 </script>
 </body>
-</html>  
+</html>
